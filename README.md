@@ -47,12 +47,9 @@ Rather than requiring any closed-source vendor binaries, this shim replaces that
 | :--- | :---: | :--- |
 | **SQLCipher Decryption** | 🟢 Fully Supported | Unlocks and decrypts encrypted `master.db` collections directly via SQLCipher using the standard global Rekordbox 6/7 encryption key hardcoded in the shim. |
 | **Library Browsing & Filtering** | 🟢 Fully Supported | Full access to crates, playlists, and track metadata (BPM, Key, Artist, Album, Genre, File Type). |
-| **Playlist Hierarchy & Ordering** | 🟢 Fully Supported | Preserves folder nesting and matches the exact playlist sequencing (`Seq`) from Rekordbox. |
-| **Beat Grid & Tempo Locking** | 🟢 Fully Supported | Directly extracts Pioneer `ANLZ` binary chunks (`PQTZ`) for instant tempo and downbeat alignment without triggering Bitwig's heavy CPU transient detection. |
+| **Beat Grid & Tempo Locking** | 🟢 Fully Supported | Directly extracts Pioneer `ANLZ` binary chunks (`PQTZ`) for instant tempo and downbeat alignment without triggering Bitwig's audio analysis. |
 | **Hot Cues** | 🟢 Fully Supported | Hot Cues (A–H) snap to exact millisecond timestamps on the timeline with color. |
 | **Memory Cues** | 🔵 Added Feature | Memory Cues are not supported by default. This Shim adds support and maps them to I-P without color. |
-| **External Audio Drag & Drop** | 🟢 Fully Supported | Dragging audio known to Rekordbox into projects auto-detects Pioneer tempo/grid by matching file paths. |
-| **Cue Marker Names & Colors** | 🟢 Fully Supported | Cue markers load at exact timestamps with official Pioneer colors and standard Hot Cue letters (A–H.=). Memory labels (custom comments) are omitted by Bitwig's internal CueMarker class design. |
 | **Song Structure / Phrase Slicing** | 🔴 TODO | "Split into clips at: Song Structure" currently passes empty arrays (`PhraseInfo`). |
 | **Vocal Position Guide Track** | 🔴 TODO | "Insert Vocal Position reference track" currently passes `NULL` (`VocalDetectInfo`). |
 
