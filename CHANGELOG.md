@@ -13,6 +13,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [1.0.0] - 2026-10-13
 
 ### Added
+- Added support for Memory Cues. They're mapped to letters I-P without color to differentiate them from Hot Cues.
+
+## [1.0.0] - 2026-10-13
+
+### Added
 - Initial release of the native C/JNI Rekordbox bridge (`librekordbox_shim.so`) for Bitwig Studio on Linux (tested on Bitwig 6.1.4+).
 - Direct SQLCipher decryption of Rekordbox 6 and 7 `master.db` databases in read-only mode (`SQLITE_OPEN_READONLY`).
 - Full playlist, crate, and nested folder hierarchy reconstruction matching Rekordbox sequencing (`Seq`).

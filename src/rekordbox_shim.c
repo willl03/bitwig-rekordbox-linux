@@ -601,7 +601,7 @@ EXPORT jobject JNICALL Java_com_bitwig_base_rekordbox_library_RekordboxSDK_getSo
         beatGridObj = create_dummy_beatgrid(env, track_bpm, track_len);
     }
 
-    // 4. Query Cue markers from djmdCue
+// 4. Query Cue markers from djmdCue with non-colliding separation for Hot Cues vs Memory Cues
     jclass cueClass = (*env)->FindClass(env, "com/bitwig/base/rekordbox/library/RekordboxSongDetails$CueMarker");
     jmethodID cueCtor = cueClass ? (*env)->GetMethodID(env, cueClass, "<init>", "(IJ)V") : NULL;
 
@@ -626,14 +626,22 @@ EXPORT jobject JNICALL Java_com_bitwig_base_rekordbox_library_RekordboxSDK_getSo
             if (sqlite3_prepare_v2(h, cue_sql, -1, &cstmt, NULL) == SQLITE_OK) {
                 sqlite3_bind_text(cstmt, 1, content_id, -1, SQLITE_STATIC);
                 int idx = 0;
+                int memory_cue_slot = 10; // Start Memory Cues at 'I' (10) to avoid colliding with Hot Cues A-H (1-8)
+
                 while (sqlite3_step(cstmt) == SQLITE_ROW && idx < cue_count) {
                     int kind = sqlite3_column_int(cstmt, 0);
                     jlong pos_ms = (jlong)sqlite3_column_int64(cstmt, 1);
                     jlong out_ms = (jlong)sqlite3_column_int64(cstmt, 2);
 
-                    // If Memory Cue (0) has a valid loop end (OutMsec > InMsec), Bitwig's Loop kind is -1
-                    if (kind == 0 && out_ms > pos_ms) {
-                        kind = -1;
+                    if (kind == 0) {
+                        if (out_ms > pos_ms) {
+                            kind = -1; // Loop
+                        } else {
+                            kind = memory_cue_slot++;
+                            if (memory_cue_slot > 17) {
+                                memory_cue_slot = 10; // Wrap around if more than 8 memory cues
+                            }
+                        }
                     }
 
                     jobject cueObj = (*env)->NewObject(env, cueClass, cueCtor, (jint)kind, pos_ms);
