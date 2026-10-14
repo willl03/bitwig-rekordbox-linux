@@ -2,6 +2,8 @@
 
 A native C JNI bridge enabling **Bitwig Studio on Linux** to interface directly with local **Pioneer Rekordbox 6 / 7** libraries. The shim decrypts Rekordbox's SQLCipher database using Pioneer's standard master key, reconstructs playlist and folder hierarchies, extracts Hot Cues and Memory Cues, and reads authentic Pioneer `ANLZ` beatgrids (`PQTZ` chunks) directly to bypass CPU-intensive audio transient analysis.
 
+![Bitwig Studio on Linux browsing with Rekordbox integration](assets/rekordbox-bitwig-linux.png)
+
 ---
 
 ## What is this?
